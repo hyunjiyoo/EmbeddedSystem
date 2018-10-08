@@ -19,38 +19,34 @@ const TurnOn = function() {
     if(index > order.length - 1)
         index = 0;
     gpio.digitalWrite(BUZZER, 1);
+    gpio.delay(1000);
+    gpio.digitalWrite(BUZZER, 0);
 
     if(order[index] == 1){
         console.log("Blue light on");
         gpio.digitalWrite(LED_BLUE, 1);
+        gpio.delay(1000);
+        gpio.digitalWrite(LED_BLUE, 0);
     }
     else if(order[index] == 2){
         console.log("Red light on");
         gpio.digitalWrite(LED_RED, 1);
+        gpio.delay(1000);
+        gpio.digitalWrite(LED_RED, 0);
     }
     else {
         console.log("Green light on");
         gpio.digitalWrite(LED_GREEN, 1);
+        gpio.delay(1000);
+        gpio.digitalWrite(LED_GREEN, 0);
     }
-    setTimeout(CheckButton, 100);
-}
-
-const TurnOff = function() {
-    gpio.digitalWrite(BUZZER, 0);
-    gpio.digitalWrite(LED_BLUE, 0);
-    gpio.digitalWrite(LED_RED, 0);
-    gpio.digitalWrite(LED_GREEN, 0);
-    setTimeout(CheckButton, 100);
+    setTimeout(TurnOn, 100);
 }
 
 const CheckButton = function() {
     let data = gpio.digitalRead(BUTTON);
-    if(!data){
-        setTimeout(TurnOn, 100);
-    }
-    else {
-        setTimeout(TurnOff, 100);
-    }
+    if(!data)
+        TurnOn();
 }
 
 process.on('SIGINT', function() {
