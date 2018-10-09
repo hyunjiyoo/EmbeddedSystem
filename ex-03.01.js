@@ -47,6 +47,7 @@ const CheckButton = function() {
     let data = gpio.digitalRead(BUTTON);
     if(!data)
         TurnOn();
+    setTimeout(CheckButton, 300);
 }
 
 process.on('SIGINT', function() {

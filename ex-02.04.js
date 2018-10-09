@@ -11,21 +11,22 @@ const LED2 = 28;
 var count = 0;
 
 const CheckButton = function() {
-    gpio.digitalWrite(LED2, 0);
     let data = gpio.digitalRead(BUTTON);
     if(!data){
-        count++;
         LED_light();
     }
+    setTimeout(CheckButton, 300);
 }
 
 const LED_light = function() {
+    count++;
     if(count%2 == 1) {
         gpio.digitalWrite(LED2, 1);
     }
     else {
         gpio.digitalWrite(LED2, 0);
     }
+    setTimeout(CheckButton, 1000);
 }
 
 process.on('SIGINT', function() {

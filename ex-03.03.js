@@ -18,6 +18,7 @@ const CheckButton = function () {
         gpio.digitalWrite(BUZZER, 1);
         setTimeout(CheckLight, 500);
     }
+    setTimeout(CheckButton, 300);
 }
 
 const CheckLight = function () {
