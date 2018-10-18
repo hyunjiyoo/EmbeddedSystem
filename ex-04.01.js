@@ -27,7 +27,7 @@ const CheckTouch = function() {
         gpio.delay(200);
         gpio.digitalWrite(LED1, 0);
     }
-    setTimeout(CheckButton, 100);
+    setTimeout(CheckTouch, 300);
 }
 
 const CheckButton = function () {
@@ -38,13 +38,13 @@ const CheckButton = function () {
         gpio.delay(100);
         gpio.digitalWrite(BUZZER, 0);
         count++;
-        if(count%2 == 1) {
-            gpio.digitalWrite(LED3, 1);
-            setTimeout(CheckLight, 300);
-        }
-        else {
-            gpio.digitalWrite(LED3, 0);
-        }
+    }
+    if(count%2 == 1) {
+        gpio.digitalWrite(LED3, 1);
+        setTimeout(CheckLight, 500);
+    }
+    else {
+        gpio.digitalWrite(LED3, 0);
     }
     setTimeout(CheckButton, 300);
 }
@@ -53,9 +53,11 @@ const CheckLight = function() {
     var data_l = gpio.digitalRead(LIGHT);
     if(data_l) {
         gpio.digitalWrite(RELAY, gpio.HIGH);
+        console.log("Relay on");
     }
     else {
         gpio.digitalWrite(RELAY, gpio.LOW);
+        console.log("Relay off");
     }
     setTimeout(CheckButton, 300);
 }
