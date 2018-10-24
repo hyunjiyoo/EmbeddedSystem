@@ -7,26 +7,20 @@
 const gpio = require('node-wiring-pi');
 const BUTTON = 27;
 const LED2 = 28;
-
 var count = 0;
 
 const CheckButton = function() {
     let data = gpio.digitalRead(BUTTON);
     if(!data){
-        LED_light();
+        count++;
+        if(count % 2 == 1) {
+            gpio.digitalWrite(LED2, 1);
+        }
+        else {
+            gpio.digitalWrite(LED2, 0);
+        }
     }
     setTimeout(CheckButton, 300);
-}
-
-const LED_light = function() {
-    count++;
-    if(count%2 == 1) {
-        gpio.digitalWrite(LED2, 1);
-    }
-    else {
-        gpio.digitalWrite(LED2, 0);
-    }
-    setTimeout(CheckButton, 1000);
 }
 
 process.on('SIGINT', function() {
