@@ -10,44 +10,32 @@ const LED_RED = 28;
 const LED_GREEN = 27;
 const LED_BLUE = 23;
 const BUZZER = 25;
+var count = 0;
 
-var order = [1,2,3];
-var index = -1;
+const CheckButton = function() {
+    gpio.digitalWrite(BUZZER, 0);
+    let data = gpio.digitalRead(BUTTON);
+    if(!data){
+        count++;
+        TurnOn();
+    }
+    setTimeout(CheckButton, 300);
+}
 
 const TurnOn = function() {
-    index++;
-    if(index > order.length - 1)
-        index = 0;
     gpio.digitalWrite(BUZZER, 1);
-    gpio.delay(1000);
-    gpio.digitalWrite(BUZZER, 0);
-
-    if(order[index] == 1){
-        console.log("Blue light on");
+    if (count % 3 == 1) {
         gpio.digitalWrite(LED_BLUE, 1);
-        gpio.delay(1000);
         gpio.digitalWrite(LED_BLUE, 0);
     }
-    else if(order[index] == 2){
-        console.log("Red light on");
+    else if (count % 3 == 2) {
         gpio.digitalWrite(LED_RED, 1);
-        gpio.delay(1000);
         gpio.digitalWrite(LED_RED, 0);
     }
     else {
-        console.log("Green light on");
         gpio.digitalWrite(LED_GREEN, 1);
-        gpio.delay(1000);
         gpio.digitalWrite(LED_GREEN, 0);
     }
-    setTimeout(TurnOn, 100);
-}
-
-const CheckButton = function() {
-    let data = gpio.digitalRead(BUTTON);
-    if(!data)
-        TurnOn();
-    setTimeout(CheckButton, 300);
 }
 
 process.on('SIGINT', function() {
@@ -65,4 +53,4 @@ gpio.pinMode(LED_RED, gpio.OUTPUT);
 gpio.pinMode(LED_GREEN, gpio.OUTPUT);
 gpio.pinMode(BUZZER, gpio.OUTPUT);
 
-setTimeout(CheckButton, 100);
+setTimeout(CheckButton, 300);
