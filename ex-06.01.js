@@ -25,9 +25,7 @@ const SPI_SPEED = 1000000
 const LED3 = 27
 var sound_value = 1997
 var sid;
-var light_value = 1000
 var lid;
-var led_value;
 
 app.use(bodyParser.urlencoded( { extended: false }));
 
@@ -43,12 +41,16 @@ const SoundDetect = function() {
 
 const LightDetect = function() {
     lightsensor.readRawValue(SPI_CHANNEL_ONE, function (value) {
+        let convert_value = value / 40.95;
         let pwm = gpio.softPwmCreate(LED3, 0, 100);
+        gpio.softPwmWrite(LED3, convert_value);
 
         if(!pwm){
-            let convert_value = (led_value/50)-((led_value/50)%10);
-            gpio.softPwmWrite(LED3, convert_value);
-            console.log("");
+            console.log("아날로그 광센서 값: (%d), LED3 밝기값: (%d)", value, convert_value);
+            if(convert_value > 50)
+                console.log("LED 밝아짐");
+            else
+                console.log("LED 어두워짐")
         }
         else
             console.log("광센서 인식안함");
@@ -73,9 +75,7 @@ app.get('/', (req, res) => {
 
 app.post('/', (req, res) => {
     let body = req.body;
-
     sound_value = body.threshold_sound;
-    led_value = body.threshold_light;
     res.redirect('/');
 });
 
@@ -111,6 +111,5 @@ app.listen(60001, () => {
     gpio.pinMode(CS_MCP3208, gpio.OUTPUT);
     gpio.pinMode(LED3, gpio.OUTPUT);
     console.log("아날로그 사운드센서, 광센서 제어용 웹서버...");
-    console.log("소리센서 기준값: " + sound_value + "광센서 기준값: " + light_value);
     console.log("http://192.9.82.80:60001/");
 });
