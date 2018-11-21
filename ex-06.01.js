@@ -22,7 +22,9 @@ const SPI_CHANNEL_ZERO = 0
 const SPI_CHANNEL_ONE = 1
 const SPI_SPEED = 1000000
 
-const LED3 = 27
+const LED_R = 27
+const LED_G = 28
+const LED_B = 29
 var sound_value = 1997
 var sid;
 var lid;
@@ -42,24 +44,27 @@ const SoundDetect = function() {
 const LightDetect = function() {
     lightsensor.readRawValue(SPI_CHANNEL_ONE, function (value) {
         let convert_value = value / 40.95;
-        let pwm = gpio.softPwmCreate(LED3, 0, 100);
-        gpio.softPwmWrite(LED3, convert_value);
 
-        if(!pwm){
-            console.log("아날로그 광센서 값: (%d), LED3 밝기값: (%d)", value, convert_value);
-            if(convert_value > 50)
-                console.log("LED 밝아짐");
-            else
-                console.log("LED 어두워짐")
-        }
+        gpio.softPwmCreate(LED_R, 0, 100);
+        gpio.softPwmCreate(LED_G, 0, 100);
+        gpio.softPwmCreate(LED_B, 0, 100);
+        gpio.softPwmWrite(LED_R, convert_value);
+        gpio.softPwmWrite(LED_G, convert_value);
+        gpio.softPwmWrite(LED_B, convert_value);
+        console.log("아날로그 광센서 값: (%d), LED3 밝기값: (%d)", value, convert_value);
+
+        if(convert_value > 50)
+            console.log("LED 밝아짐");
         else
-            console.log("광센서 인식안함");
+            console.log("LED 어두워짐")
     });
     lid = setTimeout(LightDetect, 200);
 }
 
 process.on('SIGINT', function () {
-    gpio.digitalWrite(LED3, 0);
+    gpio.digitalWrite(LED_R, 0);
+    gpio.digitalWrite(LED_G, 0);
+    gpio.digitalWrite(LED_B, 0);
     clearTimeout(sid);
     clearTimeout(lid);
     console.log("Program Exit...");
@@ -99,7 +104,9 @@ app.get('/11', (req, res) => {
 
 app.get('/10', (req, res) => {
     console.log("light sensor OFF 호출");
-    gpio.digitalWrite(LED3, 0);
+    gpio.digitalWrite(LED_R, 0);
+    gpio.digitalWrite(LED_G, 0);
+    gpio.digitalWrite(LED_B, 0);
     clearTimeout(lid);
     res.redirect('/');
 });
@@ -109,7 +116,9 @@ app.listen(60001, () => {
     gpio.wiringPiSPISetup(SPI_CHANNEL_ZERO, SPI_SPEED);
     gpio.wiringPiSPISetup(SPI_CHANNEL_ONE, SPI_SPEED);
     gpio.pinMode(CS_MCP3208, gpio.OUTPUT);
-    gpio.pinMode(LED3, gpio.OUTPUT);
+    gpio.pinMode(LED_R, gpio.OUTPUT);
+    gpio.pinMode(LED_G, gpio.OUTPUT);
+    gpio.pinMode(LED_B, gpio.OUTPUT);
     console.log("아날로그 사운드센서, 광센서 제어용 웹서버...");
     console.log("http://192.9.82.80:60001/");
 });
