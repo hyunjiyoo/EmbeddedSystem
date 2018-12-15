@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<h2>소리센서 측정값</h2>
+<hr>
+<table>
+    <tr>
+        <% sounddata.forEach(function (element, i) { %>
+            <td color="red"><%= element %></td>
+        <% }); %>
+    </tr>
+</table>
+</body>
+</html>

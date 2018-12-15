@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body bgcolor="#ff8c00">
+<h2 align="center">임베디드 액츄레이터 제어</h2>
+<table align="center" border="0" cellspacing="300">
+    <tr>
+        <td align="center">LED1</td>
+        <td align="right"><a href="/led1/1">ON</a></td>
+        <td align="left"><a href="/led1/0">OFF</a></td>
+        <td align="left"><font color="<%= led1color %>">●</font></td>
+    </tr>
+    <tr>
+        <td align="center">Buzzer</td>
+        <td align="right"><a href="/buzzer/1">ON</a></td>
+        <td align="left"><a href="/buzzer/0">OFF</a></td>
+        <td align="left"><font color="<%= buzzercolor %>">●</font></td>
+    </tr>
+    <tr>
+        <td align="center">LED3</td>
+        <td align="right">ON(
+            <a href="/led3/r/1">R </a>
+            <a href="/led3/g/1">G </a>
+            <a href="/led3/b/1">B</a>
+            )
+        </td>
+        <td align="left">OFF(
+            <a href="/led3/r/0">R </a>
+            <a href="/led3/g/0">G </a>
+            <a href="/led3/b/0">B</a>
+            )
+        </td>
+        <td align="left">
+            <font color="<%= ledRcolor %>">●</font>
+            <font color="<%= ledGcolor %>">●</font>
+            <font color="<%= ledBcolor %>">●</font>
+        </td>
+    </tr>
+</table>
+<hr>
+<h2 fontcolor="grey">임베디드 센서 제어</h2>
+<table align="center" border="0" cellspacing="300">
+    <tr>
+        <td align="center">광센서</td>
+        <td align="left"><a href="/light/1">측정시작</a></td>
+        <td align="left"><a href="/light/0">측정중단</a></td>
+        <td align="left"><a href="/light/2">측정값보기</a></td>
+        <td align="center"><font color="<%= lightcolor %>">●</font></td>
+    </tr>
+    <tr>
+        <td align="center">소리센서</td>
+        <td align="left"><a href="/sound/1">측정시작</a></td>
+        <td align="left"><a href="/sound/0">측정중단</a></td>
+        <td align="left"><a href="/sound/2">측정값보기</a></td>
+        <td align="center"><font color="<%= soundcolor %>">●</font></td>
+    </tr>
+</table>
+</body>
+</html>
