@@ -10,7 +10,7 @@ var encoderValue = {
 };
 
 const ledControl = (req, res) => {
-    if(req.body.value < 5) {
+    if(req.body.value < 4) {
         gpio.digitalWrite(LED_R, 0);
         gpio.digitalWrite(LED_G, 0);
         gpio.digitalWrite(LED_B, 0);
