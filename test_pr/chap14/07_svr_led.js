@@ -3,39 +3,43 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const LED_R = 25, LED_G = 26, LED_B = 27;
 const app = express();
-var rotate = 0;
 
 var encoderValue = {
-    value: rotate
+    actid: 'LED3',
+    value: 0
 };
 
 const ledControl = (req, res) => {
-    if(req.body.value < 4) {
-        gpio.digitalWrite(LED_R, 0);
-        gpio.digitalWrite(LED_G, 0);
-        gpio.digitalWrite(LED_B, 0);
-
-        if(req.body.value == 1) {
+    if(req.body.actid == 'LED3') {
+        if(req.body.value <= 0) {
+            gpio.digitalWrite(LED_R, 0);
+            gpio.digitalWrite(LED_G, 0);
+            gpio.digitalWrite(LED_B, 0);
+        }
+        else if(req.body.value === 1) {
             gpio.digitalWrite(LED_R, 1);
             gpio.digitalWrite(LED_G, 0);
             gpio.digitalWrite(LED_B, 0);
         }
-        if(req.body.value == 2) {
+        else if(req.body.value === 2) {
             gpio.digitalWrite(LED_R, 0);
             gpio.digitalWrite(LED_G, 1);
             gpio.digitalWrite(LED_B, 0);
         }
-        if(req.body.value == 3) {
+        else if(req.body.value === 3) {
             gpio.digitalWrite(LED_R, 0);
             gpio.digitalWrite(LED_G, 0);
             gpio.digitalWrite(LED_B, 1);
         }
+        else {
+            gpio.digitalWrite(LED_R, 1);
+            gpio.digitalWrite(LED_G, 1);
+            gpio.digitalWrite(LED_B, 1);
+        }
+        res.send("OK");
     }
-    else {
-        gpio.digitalWrite(LED_R, 1);
-        gpio.digitalWrite(LED_G, 1);
-        gpio.digitalWrite(LED_B, 1);
-    }
+    else
+        res.send("FAIL");
 }
 
 app.use(bodyParser.urlencoded({extended:false}));

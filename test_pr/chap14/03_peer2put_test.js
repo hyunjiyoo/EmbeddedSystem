@@ -1,9 +1,7 @@
 const request = require('request');
 
-var value = 3;
-
 var peer2data = {
-    name: value,
+    name: 3,
 };
 
 request.put(

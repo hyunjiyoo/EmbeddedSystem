@@ -4,6 +4,7 @@ const DT = 29, CLK = 28;
 var rid, rotate = 0;
 
 var encoderValue = {
+    actid: 'LED3',
     value: rotate
 };
 
@@ -12,25 +13,24 @@ req.put(
      form: encoderValue,
      headers: {'content-type' : 'application/x-www-form-urlencoded'}},
     (err, res, body) => {
-        id(!err && res.statusCode == 200){
+        id(!err && res.statusCode === 200)
             console.log(body);
-        }
     }
 );
 
 const SenseRotate = () => {
     var checked = 0;
     // 오른쪽 회전 (1++)
-    while(gpio.digitalRead(DT) == 0) {
-        if(checked == 0) {
+    while(gpio.digitalRead(DT) === 0) {
+        if(checked === 0) {
             rotate++;
             checked++;
         }
-        while(gpio.digitalRead(CLK) == 0) { }
+        while(gpio.digitalRead(CLK) === 0) { }
     }
     // 왼쪽 회전 (1--)
-    while(gpio.digitalRead(CLK) == 0) {
-        if(checked == 0) {
+    while(gpio.digitalRead(CLK) === 0) {
+        if(checked === 0) {
             rotate--;
             checked++;
         }
