@@ -22,10 +22,10 @@ const SPI_CHANNEL_ZERO = 0
 const SPI_CHANNEL_ONE = 1
 const SPI_SPEED = 1000000
 
-const LED_R = 27
-const LED_G = 28
-const LED_B = 29
-var sound_value = 1997
+const LED_R = 27;
+const LED_G = 28;
+const LED_B = 29;
+var sound_value = 1997;
 var sid;
 var lid;
 
